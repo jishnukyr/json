@@ -1,11 +1,22 @@
 const express = require("express")
+const dotenv =require("dotenv")
+dotenv.config();
 const app = express();
 app.use(express.json())
+
+
+const AuthRoute=require("./routes/auth")
+app.use("/api",AuthRoute);
+
+
+const CartRoute=require("./routes/cart")
+app.use("/ap",CartRoute);
 
 app.get("/",(req,res)=>{
     res.send("Home");
 })
-app.post("/Login",(req,res)=>{
+app.post("/Login/:id",(req,res)=>{
+    console.log(req.params.id)
     const{email,password}=req.body;
     if(password=="email@123"){
     res.send("LOGING SUCCESFULL");
@@ -25,6 +36,14 @@ app.post("/signup",(req,res)=>{
     res.send("signup done ");
 })
 
+const mongoose=require("mongoose")
+mongoose.connect("mongodb+srv://jishnu6753:RaWDs9zjk5ijaV3K@cluster0.inyjeni.mongodb.net/?retryWrites=true&w=majority").then(()=>
+{
+    console.log("Connected");
+}).catch(err=>{
+            console.log("Not Connected");
+    }
+)
 
 
 
